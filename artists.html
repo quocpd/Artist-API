@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      body{color: #b9b5b5;}
+       </style>
+</head>
+
+
+
+
+<body>
+    
+    
+    {{ range .}}
+
+        <div> <p id="{{.ID}}"></p><p align="right"> </p>
+
+          <p style="text-align:left;">
+            {{.CreationDate}}
+            <span style="float:right;">
+              First Album: {{.FirstAlbum}}
+            </span>
+        </p>
+        <br>
+        <p align="center"><img src="{{.Image}}"></p>
+        <br>
+        <p align="center">Members: <br><br>{{.Members}}</p>
+        <br>
+        
+          
+        
+      
+      </div> 
+        <br>
+      <br><br><br><br><br><br><br><br><br><br>  
+      
+      </form><br><br><br><br><br><br><br><br><br><br><br>   
+        
+        
+         
+        <br><br><br><br><br>
+    {{ end }}
+   
+</body>
+
+</html>

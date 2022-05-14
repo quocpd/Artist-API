@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+          background-color: #0e0e0e;
+          color: #b9b5b5;
+  --main-highlight-color: #fff;
+  --main-link-active-color: #fff;
+  --main-border-color: #8080804d;
+  --activity-bg-color: #000;
+  --footer-height: 100px;
+  --main-bg-color-dark: #202020; 
+          scroll-behavior: smooth;
+          height: 100%;
+        }
+        
+        #section1 {
+          height: 600px;
+          background-color: pink;
+        }
+        
+        #section2 {
+          height: 600px;
+          background-color: yellow;
+        }
+        iframe {
+    
+    width: 450px; 
+    height: 50000px;
+    margin: 0 auto;
+    
+   
+}
+        
+        </style>
+</head>
+
+
+
+
+<body>
+    
+    
+    <iframe id="dates" src="http://localhost:8080/dates" align="right" height="1000" frameBorder="0" scrolling="no"></iframe>
+    <iframe id="locations" src="http://localhost:8080/locations" align="right" height="1000" frameBorder="0" scrolling="no"></iframe>
+    <iframe id="artists" class='embed-responsive' src="http://localhost:8080/artists" align="right" height="1000" frameBorder="0" scrolling="no"></iframe>
+    
+    
+    
+    <br>
+      {{ range .}}
+      
+      <p id="{{.ID}}">{{.Name}}</p>
+      
+      
+        
+        
+          
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        
+         <a href="#{{.Previous}}">PREVIOUS  </a><br><br></div>
+          
+          
+            <a href="#{{.Next}}">NEXT</a>
+          <br><br><br><br><br>
+      {{ end }}
+     
+  
+</body>
+
+</html>
