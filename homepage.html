@@ -8,70 +8,58 @@
     <style>
         html,
         body {
-          background-color: #0e0e0e;
+          background-color: black;
           color: #b9b5b5;
-  --main-highlight-color: #fff;
-  --main-link-active-color: #fff;
-  --main-border-color: #8080804d;
-  --activity-bg-color: #000;
-  --footer-height: 100px;
-  --main-bg-color-dark: #202020; 
+ 
           scroll-behavior: smooth;
           height: 100%;
+          
         }
-        
-        #section1 {
-          height: 600px;
-          background-color: pink;
-        }
-        
-        #section2 {
-          height: 600px;
-          background-color: yellow;
-        }
+        a {font-size: 20px;
+          }
         iframe {
     
-    width: 450px; 
+    width: 700px; 
     height: 50000px;
     margin: 0 auto;
     
    
 }
         
-        </style>
+ </style>
 </head>
 
 
-
-
 <body>
+    {{ range .}}
     
-    
-    <iframe id="dates" src="http://localhost:8080/dates" align="right" height="1000" frameBorder="0" scrolling="no"></iframe>
-    <iframe id="locations" src="http://localhost:8080/locations" align="right" height="1000" frameBorder="0" scrolling="no"></iframe>
-    <iframe id="artists" class='embed-responsive' src="http://localhost:8080/artists" align="right" height="1000" frameBorder="0" scrolling="no"></iframe>
-    
-    
-    
+    <h1 align="center"> Groupie Tracker</h1>  
+    <div> <p id="{{.ID}}"></p><p align="right"> </p>
+      
+      <h2 style="text-align:center">{{.Name}}</h2>
+      <h3 style="text-align:left;">
+        {{.CreationDate}}
+        
+        <span style="float:right;">
+          First Album: {{.FirstAlbum}}
+        </span>
+    </p>
     <br>
-      {{ range .}}
-      
-      <p id="{{.ID}}">{{.Name}}</p>
-      
-      
-        
-        
-          
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        
-         <a href="#{{.Previous}}">PREVIOUS  </a><br><br></div>
-          
-          
-            <a href="#{{.Next}}">NEXT</a>
-          <br><br><br><br><br>
-      {{ end }}
+    <a href="http://localhost:8080/groupietracker/#{{.ID}}">
+    <p align="center"><img src="{{.Image}}"></p>
+  </a>
+    <br>
+    <p align="center">Members: <br><br>{{.Members}}</p>
+    <br>
+    <a align="center" href="#{{.Previous}}">PREVIOUS</a>
+     <br><br>
+       <a align="center" href="#{{.Next}}">NEXT</a></div>
+       <br><br><br><br><br>
+ {{ end }}
      
   
 </body>
 
+
+</script>
 </html>
