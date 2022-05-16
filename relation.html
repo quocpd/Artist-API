@@ -15,6 +15,7 @@
     }
     a {font-size: 20px}
 </style>
+<form method="POST" action="/groupietracker">  
 <body>
     {{ range .}}
      
@@ -25,4 +26,5 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><a href="http://localhost:8080/groupietracker#{{.ID}}">Back</a><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
  {{ end }}
 </body>
+</form>
 </html>

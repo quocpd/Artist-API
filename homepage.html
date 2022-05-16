@@ -29,7 +29,7 @@
  </style>
 </head>
 
-
+<form method="POST" action="/groupietracker/"> 
 <body>
     {{ range .}}
     
@@ -50,16 +50,15 @@
   </a>
     <br>
     <p align="center">Members: <br><br>{{.Members}}</p>
-    <br>
-    <a align="center" href="#{{.Previous}}">PREVIOUS</a>
-     <br><br>
-       <a align="center" href="#{{.Next}}">NEXT</a></div>
+    <br><br><br><br>
+    <p align="center"> <a href="#{{.Previous}}">PREVIOUS</a></p></div>
+       <p align="center"> <a href="#{{.Next}}">NEXT</a></p></div>
        <br><br><br><br><br>
  {{ end }}
      
   
 </body>
-
+</form>
 
 </script>
 </html>

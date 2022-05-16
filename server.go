@@ -8,12 +8,11 @@ import (
 	"log"
 	"net/http"
 	"os"
-	
 )
 
 type Response []struct {
-	Artists   []Artists
-	Relation  []Relation
+	Artists  []Artists
+	Relation []Relation
 }
 
 type Artists struct {
@@ -30,7 +29,7 @@ type Relation struct {
 	Index []Relations `json:"index"`
 }
 type Relations struct {
-	ID             int                `json:"id"`
+	ID             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
 
@@ -43,10 +42,15 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 
 	response, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
 	if err != nil {
-		http.Error(w, "500 Internal Server Error.", http.StatusInternalServerError)
+		fmt.Print(err.Error())
 		os.Exit(1)
 	}
 	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		http.Error(w, "500 Internal Server Error.", http.StatusInternalServerError)
+		return
+	}
 
 	responseData, err := ioutil.ReadAll(response.Body)
 	if err != nil {
@@ -54,6 +58,11 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var artists []Artists
 	json.Unmarshal([]byte(responseData), &artists)
+
+	if err != nil {
+		handleRequest400(err, w)
+		return
+	}
 
 	for i := range artists {
 
@@ -72,6 +81,7 @@ func homePageHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	t.Execute(w, artists)
+
 }
 
 func relationHandler(w http.ResponseWriter, r *http.Request) {
@@ -88,6 +98,11 @@ func relationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer response.Body.Close()
 
+	if response.StatusCode != http.StatusOK {
+		fmt.Print(err.Error())
+		return
+	}
+
 	responseData, err := ioutil.ReadAll(response.Body)
 	if err != nil {
 		log.Fatal(err)
@@ -99,8 +114,18 @@ func relationHandler(w http.ResponseWriter, r *http.Request) {
 
 	var relation Relation
 	json.Unmarshal(responseData, &relation)
-	t.Execute(w, relation.Index)
+	// x := map[string]interface{}{					Error 400 test
+	// 	"foo": make(chan int),
+	// }
+	// i, err := json.Marshal(x)
+	// fmt.Println(i)
+	// fmt.Printf("Marshal error: %s\n", err)
 
+	t.Execute(w, relation.Index)
+	if err != nil {
+		handleRequest400(err, w)
+		return
+	}
 }
 
 func main() {
@@ -109,4 +134,18 @@ func main() {
 	http.HandleFunc("/groupietracker/", relationHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 	fmt.Println("Starting server on port", "8080")
+
+}
+
+func handleRequest400(err error, w http.ResponseWriter) {
+	w.WriteHeader(http.StatusBadRequest)
+	w.Header().Set("Content-Type", "application/json")
+	resp := make(map[string]string)
+	resp["message"] = "Error 400 Bad Request"
+	jsonResp, err := json.Marshal(resp)
+	if err != nil {
+		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
+	}
+	w.Write(jsonResp)
+	return
 }
